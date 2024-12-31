@@ -1,12 +1,6 @@
 import { injectable } from 'inversify';
-import 'reflect-metadata';
-import type { Message, Post, PostId } from './post';
-
-export interface IPostRepository {
-  findPost(id: PostId): Promise<Post>;
-  findAllPosts(): Promise<Post[]>;
-  createPost(post: Post): Promise<Message>;
-}
+import type { Message, Post, PostId } from '../../domain/models/Post';
+import type { IPostRepository } from '../../domain/repositories/IPostRepository';
 
 @injectable()
 export class PostRepository implements IPostRepository {
@@ -17,32 +11,26 @@ export class PostRepository implements IPostRepository {
     if (!response.ok) {
       throw new Error(`Failed to fetch post with id ${id}`);
     }
-    const data = (await response.json()) as Post;
-    return data;
+    return response.json() as Promise<Post>;
   }
 
   async findAllPosts(): Promise<Post[]> {
     const response = await fetch(this.apiUrl);
     if (!response.ok) {
-      throw new Error('Failed to fetch post');
+      throw new Error('Failed to fetch posts');
     }
-    const data = (await response.json()) as Post[];
-    return data;
+    return response.json() as Promise<Post[]>;
   }
 
   async createPost(post: Post): Promise<Message> {
     const response = await fetch(this.apiUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...post }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(post),
     });
     if (!response.ok) {
-      console.error(response);
       throw new Error('Failed to create post Error!');
     }
-
     return { message: 'Post created successfully!' };
   }
 }

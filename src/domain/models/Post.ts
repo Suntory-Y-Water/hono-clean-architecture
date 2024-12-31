@@ -10,7 +10,6 @@ export type Message = {
 };
 
 const postIdBrand = Symbol();
-
 export type PostId = number & { [postIdBrand]: unknown };
 
 export function createPostId(id: number): PostId {

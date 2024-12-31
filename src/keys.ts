@@ -1,6 +1,4 @@
-const TYPES = {
-  PostService: Symbol.for('PostService'),
+export const TYPES = {
+  PostUsecase: Symbol.for('PostUsecase'),
   PostRepository: Symbol.for('PostRepository'),
 };
-
-export { TYPES };

@@ -1,30 +1,29 @@
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
-import { TYPES } from './keys';
-import type { Message, Post, PostId } from './post';
-import type { IPostRepository } from './postRepository';
+import type { Message, Post, PostId } from '../../domain/models/Post';
+import type { IPostRepository } from '../../domain/repositories/IPostRepository';
+import { TYPES } from '../../keys';
 
-export interface IPostService {
+export interface IPostUsecase {
   getPost(id: PostId): Promise<Post>;
   getAllPosts(): Promise<Post[]>;
   createPost(post: Post): Promise<Message>;
 }
 
 @injectable()
-export class PostService implements IPostService {
+export class PostUsecase implements IPostUsecase {
   constructor(
     @inject(TYPES.PostRepository) private postRepository: IPostRepository,
   ) {}
 
   async getPost(id: PostId): Promise<Post> {
-    return await this.postRepository.findPost(id);
+    return this.postRepository.findPost(id);
   }
 
   async getAllPosts(): Promise<Post[]> {
-    return await this.postRepository.findAllPosts();
+    return this.postRepository.findAllPosts();
   }
 
   async createPost(post: Post): Promise<Message> {
-    return await this.postRepository.createPost(post);
+    return this.postRepository.createPost(post);
   }
 }

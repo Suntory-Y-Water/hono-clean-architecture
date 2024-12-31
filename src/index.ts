@@ -1,38 +1,34 @@
-import { Hono } from 'hono';
-import type { container } from './container';
-import { injectDependencies } from './middleware/injectDependencies';
-import { type Post, createPostId } from './post';
-import type { IPostService } from './postService';
+import { type Context, Hono } from 'hono';
+import type { IPostUsecase } from './application/usecases/PostUsecase';
+import { PostController } from './infrastructure/controllers/PostController';
+import { injectDependencies } from './infrastructure/middleware/injectDependencies';
 
-const app = new Hono<{
+type AppType = {
   Variables: {
-    container: typeof container;
-    postService: IPostService;
+    postUsecase: IPostUsecase;
   };
-}>();
+};
+
+const app = new Hono<AppType>();
 
 app.use('*', injectDependencies);
 
-app.get('/posts/:id', async (c) => {
-  const id = Number.parseInt(c.req.param('id'));
-  const postId = createPostId(id);
-  const postService = c.get('postService');
-  const post = await postService.getPost(postId);
-  return c.json(post);
+function createPostController(c: Context) {
+  const postUsecase = c.get('postUsecase');
+  return new PostController(postUsecase);
+}
+
+// ルーティング定義
+app.get('/posts/:id', (c) => {
+  return createPostController(c).getPost(c);
 });
 
-app.get('/posts', async (c) => {
-  const postService = c.get('postService');
-  const post = await postService.getAllPosts();
-
-  return c.json(post);
+app.get('/posts', (c) => {
+  return createPostController(c).getAllPosts(c);
 });
 
-app.post('/posts', async (c) => {
-  const request = await c.req.json<Post>();
-  const postService = c.get('postService');
-  const message = await postService.createPost(request);
-  return c.json(message);
+app.post('/posts', (c) => {
+  return createPostController(c).createPost(c);
 });
 
 export default app;
