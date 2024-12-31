@@ -1,12 +1,12 @@
 import { Hono } from 'hono';
-import { diContainer } from './diConfig';
-import { createPostId, PostCreate } from './post';
-import { IPostService } from './postService';
+import type { container } from './container';
 import { injectDependencies } from './middleware/injectDependencies';
+import { type PostCreate, createPostId } from './post';
+import type { IPostService } from './postService';
 
 const app = new Hono<{
   Variables: {
-    diContainer: typeof diContainer;
+    container: typeof container;
     postService: IPostService;
   };
 }>();
@@ -14,12 +14,9 @@ const app = new Hono<{
 app.use('*', injectDependencies);
 
 app.get('/posts/:id', async (c) => {
-  const id = parseInt(c.req.param('id'));
+  const id = Number.parseInt(c.req.param('id'));
   const postId = createPostId(id);
   const postService = c.get('postService');
-  // 型 'number' の引数を型 'PostId' のパラメーターに割り当てることはできません。
-  // 型 'number' を型 '{ [postIdBrand]: unknown; }' に割り当てることはできません。
-  // const post = await postService.getPost(id);
   const post = await postService.getPost(postId);
   return c.json(post);
 });

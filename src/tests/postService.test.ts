@@ -1,8 +1,8 @@
-import { IPostService, PostService } from '../postService';
-import { createPostId, PostCreate } from '../post';
-import { IPostRepository } from '../postRepository';
-import { TYPES } from '../types';
+import { TYPES } from '../keys';
 import { mockDiContainer } from '../mocks/mockDiConfig';
+import { type PostCreate, createPostId } from '../post';
+import type { IPostRepository } from '../postRepository';
+import { type IPostService, PostService } from '../postService';
 
 describe('PostService', () => {
   let postService: IPostService;
@@ -34,7 +34,11 @@ describe('PostService', () => {
   });
 
   test('should create a new post', async () => {
-    const newPost: PostCreate = { userId: 3, title: 'Post 3', body: 'Content of Post 3' };
+    const newPost: PostCreate = {
+      userId: 3,
+      title: 'Post 3',
+      body: 'Content of Post 3',
+    };
     const createdPost = await postService.createPost(newPost);
     expect(createdPost).toEqual({
       id: 3,

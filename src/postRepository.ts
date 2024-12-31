@@ -1,6 +1,6 @@
-import 'reflect-metadata';
 import { injectable } from 'inversify';
-import { Post, PostCreate, PostId } from './post';
+import 'reflect-metadata';
+import type { Post, PostCreate, PostId } from './post';
 
 export interface IPostRepository {
   findPost(id: PostId): Promise<Post>;
@@ -24,7 +24,7 @@ export class PostRepository implements IPostRepository {
   async findAllPosts(): Promise<Post[]> {
     const response = await fetch(this.apiUrl);
     if (!response.ok) {
-      throw new Error(`Failed to fetch post`);
+      throw new Error('Failed to fetch post');
     }
     const data = (await response.json()) as Post[];
     return data;

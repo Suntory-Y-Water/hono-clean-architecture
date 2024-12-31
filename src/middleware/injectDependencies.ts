@@ -1,11 +1,11 @@
-import { MiddlewareHandler } from 'hono';
-import { diContainer } from '../diConfig';
-import { TYPES } from '../types';
-import { IPostService } from '../postService';
+import type { MiddlewareHandler } from 'hono';
+import { container } from '../container';
+import { TYPES } from '../keys';
+import type { IPostService } from '../postService';
 
 export const injectDependencies: MiddlewareHandler = async (c, next) => {
-  const postService = diContainer.get<IPostService>(TYPES.PostService);
-  c.set('diContainer', diContainer);
+  const postService = container.get<IPostService>(TYPES.PostService);
+  c.set('container', container);
   c.set('postService', postService);
   return next();
 };
