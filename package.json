@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "wrangler dev src/index.ts",
     "deploy": "wrangler deploy --minify src/index.ts",
-    "test": "vitest run"
+    "test": "vitest run",
+    "json": "json-server --watch src/data/db.json --port 3000"
   },
   "dependencies": {
     "hono": "^4.6.15",
