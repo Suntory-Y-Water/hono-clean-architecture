@@ -1,0 +1,19 @@
+{
+  "name": "hono-clean-architecture",
+  "scripts": {
+    "dev": "wrangler dev src/index.ts",
+    "deploy": "wrangler deploy --minify src/index.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "hono": "^4.6.15",
+    "inversify": "^6.2.1",
+    "reflect-metadata": "^0.2.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241224.0",
+    "@types/inversify": "^2.0.33",
+    "vitest": "^1.6.0",
+    "wrangler": "^3.99.0"
+  }
+}
