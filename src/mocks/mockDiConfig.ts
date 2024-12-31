@@ -1,7 +1,7 @@
-import 'reflect-metadata';
 import { Container } from 'inversify';
-import { TYPES } from '../types';
-import { IPostRepository } from '../postRepository';
+import 'reflect-metadata';
+import { TYPES } from '../keys';
+import type { IPostRepository } from '../postRepository';
 import { MockPostRepository } from './mockPostRepository';
 
 const mockDiContainer = new Container();

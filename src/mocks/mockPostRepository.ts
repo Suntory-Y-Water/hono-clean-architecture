@@ -1,7 +1,7 @@
-import 'reflect-metadata';
 import { injectable } from 'inversify';
-import { IPostRepository } from '../../src/postRepository';
-import { Post, PostCreate } from '../../src/post';
+import 'reflect-metadata';
+import type { Post, PostCreate } from '../../src/post';
+import type { IPostRepository } from '../../src/postRepository';
 
 @injectable()
 export class MockPostRepository implements IPostRepository {

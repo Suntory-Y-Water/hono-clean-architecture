@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "wrangler dev src/index.ts",
     "deploy": "wrangler deploy --minify src/index.ts",
-    "test": "vitest run"
+    "test": "vitest run",
+    "json": "json-server --watch src/data/db.json --port 3000"
   },
   "dependencies": {
     "hono": "^4.6.15",
@@ -11,8 +12,8 @@
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@cloudflare/workers-types": "^4.20241224.0",
-    "@types/inversify": "^2.0.33",
     "vitest": "^1.6.0",
     "wrangler": "^3.99.0"
   }

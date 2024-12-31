@@ -1,7 +1,7 @@
+import { TYPES } from '../keys';
 import { mockDiContainer } from '../mocks/mockDiConfig';
 import { createPostId } from '../post';
-import { IPostRepository } from '../postRepository';
-import { TYPES } from '../types';
+import type { IPostRepository } from '../postRepository';
 
 describe('PostRepository', () => {
   let postRepository: IPostRepository;

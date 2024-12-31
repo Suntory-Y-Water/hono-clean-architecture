@@ -1,16 +1,16 @@
-import 'reflect-metadata';
 import { injectable } from 'inversify';
-import { Post, PostCreate, PostId } from './post';
+import 'reflect-metadata';
+import type { Message, Post, PostId } from './post';
 
 export interface IPostRepository {
   findPost(id: PostId): Promise<Post>;
   findAllPosts(): Promise<Post[]>;
-  createPost(post: PostCreate): Promise<Post>;
+  createPost(post: Post): Promise<Message>;
 }
 
 @injectable()
 export class PostRepository implements IPostRepository {
-  private readonly apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+  private readonly apiUrl = 'http://localhost:3000/posts';
 
   async findPost(id: PostId): Promise<Post> {
     const response = await fetch(`${this.apiUrl}/${id}`);
@@ -24,26 +24,25 @@ export class PostRepository implements IPostRepository {
   async findAllPosts(): Promise<Post[]> {
     const response = await fetch(this.apiUrl);
     if (!response.ok) {
-      throw new Error(`Failed to fetch post`);
+      throw new Error('Failed to fetch post');
     }
     const data = (await response.json()) as Post[];
     return data;
   }
 
-  async createPost(post: Post): Promise<Post> {
+  async createPost(post: Post): Promise<Message> {
     const response = await fetch(this.apiUrl, {
       method: 'POST',
-      body: JSON.stringify({
-        ...post,
-      }),
       headers: {
-        'Content-type': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ ...post }),
     });
     if (!response.ok) {
-      throw new Error('Failed to create post');
+      console.error(response);
+      throw new Error('Failed to create post Error!');
     }
-    const data = (await response.json()) as Post;
-    return data;
+
+    return { message: 'Post created successfully!' };
   }
 }

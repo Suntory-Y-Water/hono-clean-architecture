@@ -1,14 +1,14 @@
-export type PostCreate = {
+export type Post = {
+  id: number;
   userId: number;
   title: string;
   body: string;
 };
 
-export type Post = PostCreate & {
-  id: number;
+export type Message = {
+  message: string;
 };
 
-// post.ts
 const postIdBrand = Symbol();
 
 export type PostId = number & { [postIdBrand]: unknown };
