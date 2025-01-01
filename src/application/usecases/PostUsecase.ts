@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import type { Message, Post, PostId } from '../../domain/models/Post';
-import type { IPostRepository } from '../../domain/repositories/IPostRepository';
+import type { IPostRepository } from '../../infrastructure/repositories/IPostRepository';
 import { TYPES } from '../../keys';
 
 export interface IPostUsecase {
