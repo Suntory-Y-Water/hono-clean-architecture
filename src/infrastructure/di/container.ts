@@ -1,19 +1,54 @@
 import { Container } from 'inversify';
 import 'reflect-metadata';
-import { CreatePostUseCase } from '../../application/usecases/post/CreatePostUseCase';
-import { GetAllPostsUseCase } from '../../application/usecases/post/GetAllPostsUseCase';
-import { GetPostUseCase } from '../../application/usecases/post/GetPostUseCase';
-import { TYPES } from '../../keys';
-import { PostController } from '../controllers/PostController';
+import { CreatePostUseCase } from '../../application/usecases/post/create-post.usecase';
+import { GetAllPostsUseCase } from '../../application/usecases/post/get-all-posts.usecase';
+import { GetPostUseCase } from '../../application/usecases/post/get-posts.usecase';
+import {
+  CONTROLLER_BINDINGS,
+  REPOSITORY_BINDINGS,
+  USECASE_BINDINGS,
+} from '../../keys';
+import { CreatePostController } from '../controllers/create-post.controller';
+import { GetAllPostsController } from '../controllers/get-all-post.controller';
+import { GetPostController } from '../controllers/get-post.controller';
 import type { IPostRepository } from '../repositories/IPostRepository';
 import { PostRepository } from '../repositories/PostRepository';
 
-const container = new Container();
+function bindRepositories(container: Container): void {
+  container
+    .bind<IPostRepository>(REPOSITORY_BINDINGS.PostRepository)
+    .to(PostRepository);
+}
 
-container.bind<IPostRepository>(TYPES.PostRepository).to(PostRepository);
-container.bind<CreatePostUseCase>(TYPES.CreatePostUseCase).to(CreatePostUseCase);
-container.bind<GetAllPostsUseCase>(TYPES.GetAllPostsUseCase).to(GetAllPostsUseCase);
-container.bind<GetPostUseCase>(TYPES.GetPostUseCase).to(GetPostUseCase);
-container.bind<PostController>(TYPES.PostController).to(PostController);
+function bindUseCases(container: Container): void {
+  container
+    .bind<CreatePostUseCase>(USECASE_BINDINGS.CreatePostUseCase)
+    .to(CreatePostUseCase);
+  container
+    .bind<GetAllPostsUseCase>(USECASE_BINDINGS.GetAllPostsUseCase)
+    .to(GetAllPostsUseCase);
+  container.bind<GetPostUseCase>(USECASE_BINDINGS.GetPostUseCase).to(GetPostUseCase);
+}
 
-export { container };
+function bindControllers(container: Container): void {
+  container
+    .bind<GetPostController>(CONTROLLER_BINDINGS.GetPostController)
+    .to(GetPostController);
+  container
+    .bind<GetAllPostsController>(CONTROLLER_BINDINGS.GetAllPostsController)
+    .to(GetAllPostsController);
+  container
+    .bind<CreatePostController>(CONTROLLER_BINDINGS.CreatePostController)
+    .to(CreatePostController);
+}
+
+/**
+ * DIコンテナを生成して返す
+ */
+export function createContainer(): Container {
+  const container = new Container();
+  bindControllers(container);
+  bindUseCases(container);
+  bindRepositories(container);
+  return container;
+}

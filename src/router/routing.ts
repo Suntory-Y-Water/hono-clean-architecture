@@ -1,24 +1,17 @@
 import { Hono } from 'hono';
-import type { PostController } from '../infrastructure/controllers/PostController';
-import { container } from '../infrastructure/di/container';
-import { injectDependencies } from '../infrastructure/middleware/injectDependencies';
-import { TYPES } from '../keys';
+import type { BaseController } from '../infrastructure/controllers/base.controller';
+import { createContainer } from '../infrastructure/di/container';
 import { routingConfig } from './routing.config';
 
 const app = new Hono();
 
-app.use('*', injectDependencies);
+const container = createContainer();
 
 // biome-ignore lint/complexity/noForEach: <explanation>
 routingConfig.forEach((route) => {
-  app.get(route.path, async (c) => {
-    const controller = container.get<PostController>(TYPES.PostController);
-    return controller.main(c);
-  });
-  app.post(route.path, async (c) => {
-    const controller = container.get<PostController>(TYPES.PostController);
-    return controller.main(c);
-  });
+  const controller = container.get<BaseController>(route.serviceName);
+  app.get(route.path, (c) => controller.main(c));
+  app.post(route.path, (c) => controller.main(c));
 });
 
 export default app;

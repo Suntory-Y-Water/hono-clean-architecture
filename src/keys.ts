@@ -1,7 +1,15 @@
-export const TYPES = {
-  PostRepository: Symbol.for('PostRepository'),
+export const CONTROLLER_BINDINGS = {
+  CreatePostController: Symbol.for('CreatePostController'),
+  GetAllPostsController: Symbol.for('GetAllPostsController'),
+  GetPostController: Symbol.for('GetPostController'),
+};
+
+export const USECASE_BINDINGS = {
   CreatePostUseCase: Symbol.for('CreatePostUseCase'),
   GetAllPostsUseCase: Symbol.for('GetAllPostsUseCase'),
   GetPostUseCase: Symbol.for('GetPostUseCase'),
-  PostController: Symbol.for('PostController'),
+};
+
+export const REPOSITORY_BINDINGS = {
+  PostRepository: Symbol.for('PostRepository'),
 };

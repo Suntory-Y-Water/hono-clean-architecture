@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import type { Message, Post } from '../../../domain/models/Post';
 import { PostTitle } from '../../../domain/valueObjects/PostTitle';
 import type { IPostRepository } from '../../../infrastructure/repositories/IPostRepository';
-import { TYPES } from '../../../keys';
+import { REPOSITORY_BINDINGS } from '../../../keys';
 
 export interface CreatePostUseCaseInput {
   title: string;
@@ -12,7 +12,7 @@ export interface CreatePostUseCaseInput {
 @injectable()
 export class CreatePostUseCase {
   constructor(
-    @inject(TYPES.PostRepository) private postRepository: IPostRepository,
+    @inject(REPOSITORY_BINDINGS.PostRepository) private repository: IPostRepository,
   ) {}
 
   async execute(input: CreatePostUseCaseInput): Promise<Message> {
@@ -24,7 +24,7 @@ export class CreatePostUseCase {
         title: title.value,
         body: input.body,
       };
-      return this.postRepository.createPost(post);
+      return this.repository.createPost(post);
     } catch (error) {
       if (error instanceof Error) {
         return { message: error.message };

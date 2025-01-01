@@ -1,17 +1,23 @@
-export const routingConfig = [
+import type { Route } from '../infrastructure/controllers/base.controller';
+import { CONTROLLER_BINDINGS } from '../keys';
+
+export const routingConfig: Route[] = [
   {
-    method: 'get',
+    name: 'GetAllPosts',
+    methods: ['get'],
     path: '/posts',
-    serviceName: 'GetAllPosts',
+    serviceName: CONTROLLER_BINDINGS.GetAllPostsController,
   },
   {
-    method: 'get',
+    name: 'GetPost',
+    methods: ['get'],
     path: '/posts/:id',
-    serviceName: 'GetPost',
+    serviceName: CONTROLLER_BINDINGS.GetPostController,
   },
   {
-    method: 'post',
+    name: 'CreatePostUseCase',
+    methods: ['post'],
     path: '/posts',
-    serviceName: 'CreatePost',
+    serviceName: CONTROLLER_BINDINGS.CreatePostController,
   },
 ];
