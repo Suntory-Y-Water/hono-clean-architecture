@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
-import type { Message, Post } from '../../../domain/models/Post';
-import { PostTitle } from '../../../domain/valueObjects/PostTitle';
-import type { IPostRepository } from '../../../infrastructure/repositories/IPostRepository';
+import type { Message, Post } from '../../../domain/models/posts';
+import { PostTitle } from '../../../domain/valueObjects/post-title';
+import type { IPostRepository } from '../../../infrastructure/repositories/i-post-repository';
 import { REPOSITORY_BINDINGS } from '../../../keys';
 
 export interface CreatePostUseCaseInput {

@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
-import type { Message, Post, PostId } from '../../domain/models/Post';
-import type { IPostRepository } from './IPostRepository';
+import type { Message, Post, PostId } from '../../domain/models/posts';
+import type { IPostRepository } from './i-post-repository';
 
 @injectable()
 export class PostRepository implements IPostRepository {
@@ -17,7 +17,7 @@ export class PostRepository implements IPostRepository {
       return (await response.json()) as Post;
     } catch (error) {
       console.error('Error in findPost:', error);
-      throw error; // エラーを上位に伝播
+      throw error;
     }
   }
 
