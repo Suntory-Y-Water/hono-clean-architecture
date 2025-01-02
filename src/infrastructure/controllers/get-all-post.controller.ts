@@ -11,10 +11,6 @@ export class GetAllPostsController implements BaseController {
   ) {}
 
   async main(c: Context) {
-    return this.mainFn(c);
-  }
-
-  private async mainFn(c: Context) {
     const posts = await this.usecase.execute();
     return c.json(posts);
   }

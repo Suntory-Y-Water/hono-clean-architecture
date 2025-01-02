@@ -1,7 +1,12 @@
 import { injectable } from 'inversify';
 import 'reflect-metadata';
-import type { Post, PostCreate } from '../../src/post';
-import type { IPostRepository } from '../../src/postRepository';
+import type { Message, Post, PostId } from '../domain/models/posts';
+
+export interface IPostRepository {
+  findPost(id: PostId): Promise<Post>;
+  findAllPosts(): Promise<Post[]>;
+  createPost(post: Post): Promise<Message>;
+}
 
 @injectable()
 export class MockPostRepository implements IPostRepository {
@@ -20,9 +25,9 @@ export class MockPostRepository implements IPostRepository {
     return this.posts;
   }
 
-  async createPost(post: PostCreate): Promise<Post> {
-    const newPost = { ...post, id: this.posts.length + 1 };
+  async createPost(post: Post) {
+    const newPost: Post = { ...post, id: Date.now() };
     this.posts.push(newPost);
-    return newPost;
+    return Promise.resolve({ message: 'Post created successfully!' });
   }
 }

@@ -1,13 +1,15 @@
-import { TYPES } from '../keys';
-import { mockDiContainer } from '../mocks/mockDiConfig';
-import { createPostId } from '../post';
-import type { IPostRepository } from '../postRepository';
+import { createPostId } from '../domain/models/posts';
+import type { IPostRepository } from '../infrastructure/repositories/i-post-repository';
+import { REPOSITORY_BINDINGS } from '../keys';
+import { mockDiContainer } from '../mocks/container';
 
 describe('PostRepository', () => {
   let postRepository: IPostRepository;
 
   beforeEach(() => {
-    postRepository = mockDiContainer.get<IPostRepository>(TYPES.PostRepository);
+    postRepository = mockDiContainer.get<IPostRepository>(
+      REPOSITORY_BINDINGS.PostRepository,
+    );
   });
 
   test('should find a post by id', async () => {
@@ -31,13 +33,15 @@ describe('PostRepository', () => {
   });
 
   test('should create a new post', async () => {
-    const newPost = { userId: 3, title: 'Post 3', body: 'Content of Post 3' };
-    const createdPost = await postRepository.createPost(newPost);
-    expect(createdPost).toEqual({
-      id: 3,
+    const newPost = {
+      id: 123,
       userId: 3,
       title: 'Post 3',
       body: 'Content of Post 3',
+    };
+    const createdPost = await postRepository.createPost(newPost);
+    expect(createdPost).toEqual({
+      message: 'Post created successfully!',
     });
 
     const posts = await postRepository.findAllPosts();

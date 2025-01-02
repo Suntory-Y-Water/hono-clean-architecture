@@ -11,8 +11,8 @@ import {
 import { CreatePostController } from '../controllers/create-post.controller';
 import { GetAllPostsController } from '../controllers/get-all-post.controller';
 import { GetPostController } from '../controllers/get-post.controller';
-import type { IPostRepository } from '../repositories/IPostRepository';
-import { PostRepository } from '../repositories/PostRepository';
+import type { IPostRepository } from '../repositories/i-post-repository';
+import { PostRepository } from '../repositories/post-repository';
 
 function bindRepositories(container: Container): void {
   container

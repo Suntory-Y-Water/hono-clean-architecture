@@ -4,7 +4,7 @@ import type {
   CreatePostUseCase,
   CreatePostUseCaseInput,
 } from '../../application/usecases/post/create-post.usecase';
-import type { Post } from '../../domain/models/Post';
+import type { Post } from '../../domain/models/posts';
 import { USECASE_BINDINGS } from '../../keys';
 import type { BaseController } from './base.controller';
 
@@ -15,10 +15,6 @@ export class CreatePostController implements BaseController {
   ) {}
 
   async main(c: Context) {
-    return this.mainFn(c);
-  }
-
-  private async mainFn(c: Context) {
     const request = await c.req.json<Post>();
     const input: CreatePostUseCaseInput = {
       title: request.title,

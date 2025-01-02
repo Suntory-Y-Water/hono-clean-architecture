@@ -1,4 +1,4 @@
-import type { Message, Post, PostId } from '../../domain/models/Post';
+import type { Message, Post, PostId } from '../../domain/models/posts';
 
 export interface IPostRepository {
   findPost(id: PostId): Promise<Post>;

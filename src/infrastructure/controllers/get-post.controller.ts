@@ -1,7 +1,7 @@
 import type { Context } from 'hono';
 import { inject, injectable } from 'inversify';
 import type { GetPostUseCase } from '../../application/usecases/post/get-posts.usecase';
-import { createPostId } from '../../domain/models/Post';
+import { createPostId } from '../../domain/models/posts';
 import { USECASE_BINDINGS } from '../../keys';
 import type { BaseController } from './base.controller';
 

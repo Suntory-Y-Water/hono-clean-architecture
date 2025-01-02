@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
-import type { Message, Post, PostId } from '../../domain/models/Post';
-import type { IPostRepository } from './IPostRepository';
+import type { Message, Post, PostId } from '../../domain/models/posts';
+import type { IPostRepository } from './i-post-repository';
 
 @injectable()
 export class PostRepository implements IPostRepository {

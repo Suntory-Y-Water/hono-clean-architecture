@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
-import type { Post, PostId } from '../../../domain/models/Post';
-import type { IPostRepository } from '../../../infrastructure/repositories/IPostRepository';
+import type { Post, PostId } from '../../../domain/models/posts';
+import type { IPostRepository } from '../../../infrastructure/repositories/i-post-repository';
 import { REPOSITORY_BINDINGS } from '../../../keys';
 
 @injectable()
