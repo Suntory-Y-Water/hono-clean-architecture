@@ -17,7 +17,7 @@ export class PostRepository implements IPostRepository {
       return (await response.json()) as Post;
     } catch (error) {
       console.error('Error in findPost:', error);
-      throw error; // エラーを上位に伝播
+      throw error;
     }
   }
 

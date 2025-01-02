@@ -1,5 +1,5 @@
-export class GetAllPostsUseCaseDto {
-  constructor(public posts: PostDto[]) {}
+export class GetPostUseCaseDto {
+  constructor(public posts: PostDto) {}
 }
 
 class PostDto {

@@ -12,7 +12,7 @@ describe('PostRepository', () => {
     );
   });
 
-  test('should find a post by id', async () => {
+  it('should find a post by id', async () => {
     const postId = createPostId(1);
     const post = await postRepository.findPost(postId);
     expect(post).toEqual({
@@ -23,7 +23,7 @@ describe('PostRepository', () => {
     });
   });
 
-  test('should return all posts', async () => {
+  it('should return all posts', async () => {
     const posts = await postRepository.findAllPosts();
     expect(posts).toHaveLength(2);
     expect(posts).toEqual([
@@ -32,7 +32,7 @@ describe('PostRepository', () => {
     ]);
   });
 
-  test('should create a new post', async () => {
+  it('should create a new post', async () => {
     const newPost = {
       id: 123,
       userId: 3,
@@ -48,7 +48,7 @@ describe('PostRepository', () => {
     expect(posts).toHaveLength(3);
   });
 
-  test('should throw an error if post not found', async () => {
+  it('should throw an error if post not found', async () => {
     const postId = createPostId(999);
     await expect(postRepository.findPost(postId)).rejects.toThrow('Post not found');
   });
